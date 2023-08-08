@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+</head>
+
+<body>
+    <table>
+        <tbody>
+            <tr>
+                <td><img id="1" src="Icons/star24.png" /></td>
+                <td><img id="2" src="Icons/starColor24.png" /></td>
+                <td><img id="3" src="Icons/star24.png" /></td>
+                <td><img id="4" src="Icons/starColor24.png" /></td>
+                <td><img id="5" src="Icons/star24.png" /></td>
+                <td><img id="6" src="Icons/starColor24.png" /></td>
+                <td><img id="7" src="Icons/star24.png" /></td>
+                <td><img id="8" src="Icons/starColor24.png" /></td>
+                <td><img id="9" src="Icons/star24.png" /></td>
+                <td><img id="10" src="Icons/starColor24.png" /></td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+
+<script>
+
+    $(document).ready(function () {
+
+        let rate = 0;       // values: 0,1,3,5,7,9
+        init(rate);
+
+        $("img").hover(
+            function () {
+                onMouseOver(this);
+            },
+            function () {
+                onMouseLeave(this);
+            });
+
+        $("img").click(function () {
+            let $this = $(this);
+            let id = $this.attr('id');
+            // refresh component with new rate
+        });
+    });
+
+    function onMouseOver(e) {
+        let $this = $(e);
+        let id = $this.attr('id');
+        init(parseInt(id));
+    }
+
+    function onMouseLeave(e) {
+        let $this = $(e);
+        let id = $this.attr('id');
+        empty(parseInt(id));
+    }
+
+    function init(rate) {
+        debugger;
+        console.log($("img"));
+
+        if (rate % 2 === 1)
+            ++rate;
+
+        $("img").show();
+
+        $("img")
+            .filter(function () {
+                return parseInt($(this).attr('id')) % 2 === 1 && parseInt($(this).attr('id')) < rate
+            }).hide();
+
+        $("img")
+            .filter(function () {
+                return parseInt($(this).attr('id')) % 2 === 0 && parseInt($(this).attr('id')) > rate
+            })
+            .hide();
+    }
+
+    function empty() {
+
+        $("img").show();
+
+        $("img")
+            .filter(function () {
+                return parseInt($(this).attr('id')) % 2 === 0
+            }).hide();
+    }
+</script>
+
+</html>
