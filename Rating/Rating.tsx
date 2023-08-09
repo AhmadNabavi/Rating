@@ -18,6 +18,7 @@ const RatingComponent: any = (props: any) => {
     }
 
     const handleToggle = (_value: number) => {
+
         let images_all: any = document.querySelectorAll('img');
         let images = [];
         _rate = _value;
@@ -26,21 +27,22 @@ const RatingComponent: any = (props: any) => {
             if (images_all[i].id !== '')
                 images.push(images_all[i]);
 
-        for (let i = 0; i < images.length; ++i)                 // temporarly show all stars
-            images[i].style.display = 'block';
+        for (let i = 0; i < images.length; ++i)                 // temporarly hide all stars
+            images[i].style.display = 'none';
 
-        if (_value % 3 === 1)
+        if (_value % 3 === 1)               // if a black&white star is hovered
             _value += 2;
-        if (_value % 3 === 2)
+
+        if (_value % 3 === 2)               // if a colored start is hovered
             _value += 1;
 
         for (let j = 0; j < _value; ++j)
-            if (images[j].id % 3 === 0 || images[j].id % 3 === 1)
-                images[j].style.display = 'none';
+            if (images[j].id % 3 === 2)
+                images[j].style.display = 'block';
 
-        for (let i = _value + 1; i < images.length; ++i)
-            if (images[i].id % 3 === 0 || images[i].id % 3 === 2)
-                images[i].style.display = 'none';
+        for (let i = _value; i < images.length; ++i)
+            if (images[i].id % 3 === 1)
+                images[i].style.display = 'block';
     }
 
     const handleClick = () => {
@@ -48,29 +50,25 @@ const RatingComponent: any = (props: any) => {
         let images_all: any = document.querySelectorAll('img');
         let images = [];
         let v = (_rate + 1);
-        console.log(v);
 
         for (let i = 0; i < images_all.length; ++i)
             if (images_all[i].id !== '')
                 images.push(images_all[i]);
 
-        for (let i = 0; i < images.length; ++i)                 // temporarly show all stars
-            images[i].style.display = 'block';
+        for (let i = 0; i < images.length; ++i)                 // temporarly hide all stars
+            images[i].style.display = 'none';
 
-        // if (_rate % 3 === 1)
-        //     _rate += 2;
-        // if (_rate % 3 === 2)
-        //     _rate += 1;
+        for (let j = 0; j < v; ++j)
+            if (images[j].id % 3 === 0) {
+                console.log(images[j].id % 3 === 0);
+                images[j].style.display = 'block';
+            }
 
-        // for (let j = 0; j < _rate; ++j)
-        //     if (images[j].id % 3 === 1 || images[j].id % 3 === 2)
-        //         images[j].style.display = 'none';
+        for (let i = v; i < images.length; ++i)
+            if (images[i].id % 3 === 1)
+                images[i].style.display = 'block';
 
-        // for (let i = _rate + 1; i < images.length; ++i)
-        //     if (images[i].id % 3 === 0 || images[i].id % 3 === 1)
-        //         images[i].style.display = 'none';
-
-        props.sendToOuput((_rate + 1) / 3);
+        props.sendToOuput(v / 3);
     }
 
     return <>
@@ -142,11 +140,12 @@ const RatingComponent: any = (props: any) => {
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         <img src={refresh}
                             onMouseEnter={(e: any) => { handleCursor(e); }}
-                            onClick={() => { handleToggle(-1); handleClick(); }}
+                            onClick={() => {
+                                _rate = -1; handleClick();
+                            }}
                         />
                     </td>
                 </tr>
-
             </tbody>
         </table>
     </>
